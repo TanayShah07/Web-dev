@@ -1,0 +1,24 @@
+<%- include("partials/header") %>
+
+<% if (posts.length === 0) { %>
+  <div class="no-posts">
+    <p>No blog posts yet.</p>
+  </div>
+<% } %>
+
+<div class="posts">
+  <% posts.forEach(post => { %>
+    <div class="post-card">
+      <h2><%= post.title %></h2>
+      <p><%= post.content %></p>
+      <form class="post-actions" method="POST" action="/delete/<%= post.id %>">
+        <a class="btn edit" href="/edit/<%= post.id %>">Edit</a>
+        <button class="btn delete" type="submit">Delete</button>
+      </form>
+    </div>
+  <% }) %>
+</div>
+
+<a href="/compose" class="floating-btn">+</a>
+
+<%- include("partials/footer") %>
