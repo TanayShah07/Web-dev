@@ -1,0 +1,19 @@
+body {
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+h1, h2 {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+}
+
+form input, form textarea, form select {
+  border-radius: 6px;
+}
+
+.book-card img {
+  height: 300px;
+  object-fit: cover;
+}

@@ -1,0 +1,113 @@
+<%- include('partials/header') %>
+
+<main class="container my-4">
+
+  <h1 class="text-center mb-4">📚 My Book Notes</h1>
+
+  <!-- 🔍 Search & Sort -->
+  <form method="GET" action="/" class="row g-3 mb-4">
+    <div class="col-md-6">
+      <input type="text" class="form-control" name="search" placeholder="Search by title or author" value="<%= typeof search !== 'undefined' ? search : '' %>">
+    </div>
+    <div class="col-md-4">
+      <select class="form-select" name="sort">
+        <option value="">Sort By</option>
+        <option value="title_asc">Title A–Z</option>
+        <option value="title_desc">Title Z–A</option>
+        <option value="rating_high">Rating High to Low</option>
+        <option value="rating_low">Rating Low to High</option>
+        <option value="recent">Most Recent</option>
+      </select>
+    </div>
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-primary">Apply</button>
+    </div>
+  </form>
+
+  <!-- 📖 Currently Reading -->
+  <h2 class="text-warning">📖 Currently Reading</h2>
+  <% let readingBooks = books.filter(book => book.status === 'reading'); %>
+  <div class="row">
+    <% readingBooks.forEach(book => { %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" class="card-img-top" alt="<%= book.title %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= book.title %></h5>
+            <p class="card-text"><strong>Author:</strong> <%= book.author %><br>
+              <strong>Rating:</strong> <%= book.rating %> ⭐</p>
+            <div class="d-flex justify-content-between">
+              <a href="/edit/<%= book.id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+              <form action="/delete/<%= book.id %>" method="POST">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <% if (readingBooks.length === 0) { %>
+      <p>No books currently being read.</p>
+    <% } %>
+  </div>
+
+  <!-- ✅ Books Read -->
+  <h2 class="text-success">✅ Books I’ve Read</h2>
+  <% let readBooks = books.filter(book => book.status === 'read'); %>
+  <div class="row">
+    <% readBooks.forEach(book => { %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" class="card-img-top" alt="<%= book.title %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= book.title %></h5>
+            <p class="card-text">
+              <strong>Author:</strong> <%= book.author %><br>
+              <strong>Rating:</strong> <%= book.rating %> ⭐<br>
+              <strong>Review:</strong> <%= book.review %><br>
+              <strong>Read on:</strong> <%= book.read_date ? book.read_date.toISOString().split('T')[0] : 'N/A' %>
+            </p>
+            <div class="d-flex justify-content-between">
+              <a href="/edit/<%= book.id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+              <form action="/delete/<%= book.id %>" method="POST">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <% if (readBooks.length === 0) { %>
+      <p>No books read yet.</p>
+    <% } %>
+  </div>
+
+  <!-- 📚 Want to Read -->
+  <h2 class="text-primary">📚 Want to Read</h2>
+  <% let wishlistBooks = books.filter(book => book.status === 'wishlist'); %>
+  <div class="row">
+    <% wishlistBooks.forEach(book => { %>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <img src="https://covers.openlibrary.org/b/id/<%= book.cover_id %>-M.jpg" class="card-img-top" alt="<%= book.title %>">
+          <div class="card-body">
+            <h5 class="card-title"><%= book.title %></h5>
+            <p class="card-text"><strong>Author:</strong> <%= book.author %></p>
+            <div class="d-flex justify-content-between">
+              <a href="/edit/<%= book.id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+              <form action="/delete/<%= book.id %>" method="POST">
+                <button class="btn btn-sm btn-outline-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+    <% if (wishlistBooks.length === 0) { %>
+      <p>No books in wishlist yet.</p>
+    <% } %>
+  </div>
+
+</main>
+
+<%- include('partials/footer') %>

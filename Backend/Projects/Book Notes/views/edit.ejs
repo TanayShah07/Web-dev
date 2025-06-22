@@ -1,0 +1,52 @@
+<%- include('partials/header') %>
+
+<main class="container my-4">
+  <h2 class="mb-4">✏️ Edit Book</h2>
+
+  <form action="/update/<%= book.id %>" method="POST" class="row g-3">
+    <div class="col-md-6">
+      <label class="form-label">Title</label>
+      <input type="text" class="form-control" name="title" value="<%= book.title %>" required>
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Author</label>
+      <input type="text" class="form-control" name="author" value="<%= book.author %>">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Rating (1–5)</label>
+      <input type="number" class="form-control" name="rating" min="1" max="5" value="<%= book.rating %>">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Read Date</label>
+      <input type="date" class="form-control" name="read_date" value="<%= book.read_date ? book.read_date.toISOString().split('T')[0] : '' %>">
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Cover ID</label>
+      <input type="text" class="form-control" name="cover_id" value="<%= book.cover_id %>">
+    </div>
+
+    <div class="col-md-6">
+      <label class="form-label">Status</label>
+      <select class="form-select" name="status">
+        <option value="read" <%= book.status === 'read' ? 'selected' : '' %>>✅ Read</option>
+        <option value="reading" <%= book.status === 'reading' ? 'selected' : '' %>>📖 Currently Reading</option>
+        <option value="wishlist" <%= book.status === 'wishlist' ? 'selected' : '' %>>📚 Want to Read</option>
+      </select>
+    </div>
+
+    <div class="col-12">
+      <label class="form-label">Review</label>
+      <textarea class="form-control" name="review" rows="4"><%= book.review %></textarea>
+    </div>
+
+    <div class="col-12 d-grid">
+      <button type="submit" class="btn btn-primary btn-lg">Update Book</button>
+    </div>
+  </form>
+</main>
+
+<%- include('partials/footer') %>
